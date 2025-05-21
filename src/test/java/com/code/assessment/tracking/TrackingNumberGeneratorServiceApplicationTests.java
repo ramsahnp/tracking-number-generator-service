@@ -1,4 +1,4 @@
-package com.code.assessment.tracking_number_generator;
+package com.code.assessment.tracking;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
