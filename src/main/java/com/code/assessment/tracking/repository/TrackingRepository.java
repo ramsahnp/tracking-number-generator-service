@@ -1,6 +1,6 @@
 package com.code.assessment.tracking.repository;
 
-import com.code.assessment.tracking.model.TrackingDocument;
+import com.code.assessment.tracking.dto.TrackingDocument;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;

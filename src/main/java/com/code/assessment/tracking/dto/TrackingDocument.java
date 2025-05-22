@@ -1,4 +1,4 @@
-package com.code.assessment.tracking.model;
+package com.code.assessment.tracking.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

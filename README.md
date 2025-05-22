@@ -53,6 +53,16 @@ customer_name=RedBox%20Logistics
 customer_slug=redbox-logistics
 
 
+```
+New Request sample:
+http://localhost:8080/next-tracking-number?origin_country_id=IN&destination_country_id=US&weight=1.2344545&created_at=2025-05-22T14:30:00Z&customer_id=123e4567-e89b-12d3-a456-426614174000&customer_name=John%20Doe&customer_slug=john-doe
+response:
+{
+    "trackingNumber": "INUS206888000480",
+    "createdAt": "2025-05-22T14:30Z"
+}
+
+
 
 
 

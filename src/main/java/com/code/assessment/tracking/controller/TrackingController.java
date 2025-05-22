@@ -1,6 +1,6 @@
 package com.code.assessment.tracking.controller;
 
-import com.code.assessment.tracking.model.TrackingDocument;
+import com.code.assessment.tracking.dto.TrackingDocument;
 import com.code.assessment.tracking.service.TrackingService;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,9 +18,15 @@ import java.time.OffsetDateTime;
 
 @RestController
 @RequestMapping("/next-tracking-number")
+@Validated
 public class TrackingController {
-    @Autowired
+
     private TrackingService trackingService;
+
+    @Autowired
+    public TrackingController(TrackingService trackingService){
+        this.trackingService = trackingService;
+    }
 
     @GetMapping
     public Mono<TrackingDocument> getTrackingNumber(
