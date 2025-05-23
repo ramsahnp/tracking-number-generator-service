@@ -1,68 +1,35 @@
-# Scalable Tracking Number Generator API
+📦 Spring Boot And MongoDB Tracking Number Generator App
 
-## Overview
+A scalable **Spring Boot** application that generates globally unique tracking numbers, even in clustered environments. Designed to support logistics operations by ensuring high-entropy, unique, and verifiable identifiers.
 
-A Spring Boot RESTful API that generates unique and regex-compliant tracking numbers for parcel shipments.
+---
 
-## Endpoint
+## 🔢 Tracking Number Format
 
-**GET** `/next-tracking-number`
+- **Base36 Encoded (16 characters):**
+    - Digits: `0-9` (values 0-9)
+    - Letters: `A-Z` (values 10-35)
+- **Maximum Value Supported:** ~7.959 × 10²⁴
+    - Example: `INUS468624000480`
 
-### Query Parameters:
+---
 
-- `origin_country_id`
-- `destination_country_id`
-- `weight`
-- `created_at`
-- `customer_id`
-- `customer_name`
-- `customer_slug`
+How to run locally:
 
-### Response
-
-```json
-{
-  "tracking_number": "USCA123456789ABC",
-  "created_at": "2025-05-21T10:17:30Z"
-}
-
-```
-URL-Encode Special Characters
-When using Postman or accessing the API via browser query parameters, make sure to encode certain characters:
-
-| Character | Description                     | URL-Encoded |
-| --------- | ------------------------------- | ----------- |
-| `+`       | Timezone offset                 | `%2B`       |
-| `:`       | Time separator                  | `%3A`       |
-| `-`       | OK unencoded, but `%2D` is safe |  `%2D`      |
-
-E.G:
-GET http://localhost:8080/next-tracking-number?
-origin_country_id=US
-&
-destination_country_id=IN
-&
-weight=1.235
-&
-created_at=2022-12-01T14%3A45%3A00%2B05%3A30
-&
-customer_id=de619854-b59b-425e-9db4-943979e1bd49
-&
-customer_name=RedBox%20Logistics
-&
-customer_slug=redbox-logistics
+1.install java17 or above and mongo db
+2.download this project/clone from github:https://github.com/ramsahnp/tracking-number-generator-service
+3.run mvn clean install
+4.java -jar tracking-number-generator-0.0.1-SNAPSHOT.jar
 
 
-```
-New Request sample:
-http://localhost:8080/next-tracking-number?origin_country_id=IN&destination_country_id=US&weight=1.2344545&created_at=2025-05-22T14:30:00Z&customer_id=123e4567-e89b-12d3-a456-426614174000&customer_name=John%20Doe&customer_slug=john-doe
-response:
-{
-    "trackingNumber": "INUS206888000480",
-    "createdAt": "2025-05-22T14:30Z"
-}
+## 🌍 Live Deployment
 
+This application is deployed on **Google App Engine** and accessible globally.
 
+### 🔗 Public URL:
+http://34.45.155.115:8080/next-tracking-number?origin_country_id=IN&destination_country_id=US&weight=1.2344545&created_at=2025-05-22T14:30:00Z&customer_id=123e4567-e89b-12d3-a456-426614174000&customer_name=John%20Doe&customer_slug=john-doe
+
+Response: {"trackingNumber": "INUS468624000480", "createdAt": "2025-05-22T14:30Z"}
 
 
 
