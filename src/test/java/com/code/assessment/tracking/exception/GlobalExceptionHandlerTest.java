@@ -41,12 +41,12 @@ class GlobalExceptionHandlerTest {
     }
 
     @Test
-    void shouldReturnBadRequest_ForConstraintViolation() {
+    void shouldReturnBadRequest_save_ForConstraintViolation() {
         Mockito.when(trackingService.generateTrackingNumber(any(), any(), anyDouble(), any(), any(), any(), any()))
                 .thenReturn(Mono.just(mockDoc));
 
         webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/next-tracking-number")
+                .uri(uriBuilder -> uriBuilder.path("/next-tracking-number/save")
                         .queryParam("origin_country_id", "INN")
                         .queryParam("destination_country_id", "US")
                         .queryParam("weight", "1.5")
@@ -58,10 +58,32 @@ class GlobalExceptionHandlerTest {
                 .exchange()
                 .expectStatus().isBadRequest()
                 .expectBody()
-                .jsonPath("$['getTrackingNumber.origin_country_id']")
+                .jsonPath("$['getTrackingNumberAndSaveToDatabase.origin_country_id']")
                 .isEqualTo("must match \"^[A-Z]{2}$\"")
                 .consumeWith(response -> {
                     System.out.println("Response body: " + new String(response.getResponseBody()));
                 });
+    }
+
+    @Test
+    void shouldReturnBadRequest_ForConstraintViolation() {
+        Mockito.when(trackingService.generateTrackingNumber(any(), any(), anyDouble(), any(), any(), any(), any()))
+                .thenReturn(Mono.just(mockDoc));
+
+        webTestClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/next-tracking-number")
+                        .queryParam("origin_country_id", "INN") // Invalid (3 letters)
+                        .queryParam("destination_country_id", "US")
+                        .queryParam("weight", "1.5")
+                        .queryParam("created_at", mockDoc.getCreatedAt())
+                        .queryParam("customer_id", mockDoc.getCustomerId())
+                        .queryParam("customer_name", "John Doe")
+                        .queryParam("customer_slug", "john-doe")
+                        .build())
+                .exchange()
+                .expectStatus().isBadRequest()
+                .expectBody()
+                .jsonPath("$.['generateUniqueNumber.origin_country_id']")
+                .isEqualTo("must match \"^[A-Z]{2}$\"");
     }
 }

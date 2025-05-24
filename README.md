@@ -3,6 +3,9 @@
 A scalable **Spring Boot** application that generates globally unique tracking numbers, even in clustered environments. Designed to support logistics operations by ensuring high-entropy, unique, and verifiable identifiers.
 
 ---
+## 📄 Code Assessment
+
+Download and review the [Scalable Tracking Number Generator API Test Paper](src/main/resources/Code Assessment_-Scalable Tracking Number Generator API_Test_Paper.pdf).
 
 ## 🔢 Tracking Number Format
 
@@ -30,6 +33,16 @@ This application is deployed on **Google App Engine** and accessible globally.
 http://34.45.155.115:8080/next-tracking-number?origin_country_id=IN&destination_country_id=US&weight=1.2344545&created_at=2025-05-22T14:30:00Z&customer_id=123e4567-e89b-12d3-a456-426614174000&customer_name=John%20Doe&customer_slug=john-doe
 
 Response: {"trackingNumber": "INUS468624000480", "createdAt": "2025-05-22T14:30Z"}
+
+``
+URL-Encode Special Characters
+When using Postman or accessing the API via browser query parameters, make sure to encode certain characters:
+
+| Character | Description                     | URL-Encoded |
+| --------- | ------------------------------- | ----------- |
+| `+`       | Timezone offset                 | `%2B`       |
+| `:`       | Time separator                  | `%3A`       |
+| `-`       | OK unencoded, but `%2D` is safe |  `%2D`      |
 
 
 

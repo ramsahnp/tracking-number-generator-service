@@ -24,7 +24,7 @@ public class TrackingService {
     public Mono<TrackingDocument> generateTrackingNumber(String origin, String dest, double weight,
                                                          OffsetDateTime createdAt, String customerId,
                                                          String customerName, String customerSlug) {
-        return generateUniqueNumber(origin, dest, customerSlug)
+        return generateUniqueNumber()
                 .map(trackingNumber -> {
                     TrackingDocument doc = new TrackingDocument();
                     doc.setTrackingNumber(trackingNumber);
@@ -39,12 +39,12 @@ public class TrackingService {
                 }).flatMap(repository::save);
     }
 
-    private Mono<String> generateUniqueNumber(String origin, String dest, String slug) {
-        String candidate = TrackingNumberGenerator.generateTrackingNumber(origin, dest, slug);
+    private Mono<String> generateUniqueNumber() {
+        String candidate = TrackingNumberGenerator.generateTrackingNumber();
         logger.info("Tracking Number: {}, timestamp: {}", candidate, LocalDateTime.now());
         return repository.existsById(candidate)
                 .flatMap(exists -> exists
-                        ? generateUniqueNumber(origin, dest, slug)
+                        ? generateUniqueNumber()
                         : Mono.just(candidate));
     }
 
